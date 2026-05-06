@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Find Ducky logo</title>
+  <desc id="desc">A duck-shaped signal detector mark with radar rings.</desc>
+  <rect width="512" height="512" rx="96" fill="#101418"/>
+  <circle cx="256" cy="256" r="172" fill="none" stroke="#26343B" stroke-width="20"/>
+  <circle cx="256" cy="256" r="112" fill="none" stroke="#31454D" stroke-width="16"/>
+  <path d="M154 294c16 54 67 88 133 88 58 0 105-25 135-70 9-14-1-32-18-32h-55c-28 0-51-23-51-51v-41c0-35-28-63-63-63-34 0-62 28-62 62v65c0 17-13 31-30 31-17 0-27-1-39 2-14 4-18 23-8 33 15 16 36 24 58 24z" fill="#FFD447"/>
+  <path d="M322 164c17-18 43-28 75-22 13 2 18 18 8 27l-42 38c-13 12-34 3-34-15v-20z" fill="#FF8A3D"/>
+  <circle cx="244" cy="184" r="12" fill="#101418"/>
+  <path d="M92 116c85-74 243-74 328 0" fill="none" stroke="#2FBF71" stroke-width="22" stroke-linecap="round"/>
+  <path d="M132 158c63-49 185-49 248 0" fill="none" stroke="#6AD65C" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="256" cy="256" r="28" fill="#2FBF71"/>
+</svg>
+

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ORAIK - Tech Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Space+Grotesk:wght@600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed": "#1b1c1c",
+                        "on-error": "#690005",
+                        "outline-variant": "#454556",
+                        "on-secondary-fixed-variant": "#474646",
+                        "surface-container": "#1e2020",
+                        "primary-container": "#1a23d2",
+                        "secondary-fixed-dim": "#c9c6c5",
+                        "on-primary-container": "#a7adff",
+                        "on-secondary-container": "#bab8b7",
+                        "on-primary-fixed-variant": "#1c25d3",
+                        "primary": "#bec2ff",
+                        "on-primary-fixed": "#00026c",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-variant": "#333535",
+                        "on-background": "#e2e2e2",
+                        "secondary-container": "#4a4949",
+                        "error-container": "#93000a",
+                        "surface-container-lowest": "#0c0f0f",
+                        "surface-container-high": "#282a2b",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "on-tertiary": "#303030",
+                        "primary-fixed": "#e0e0ff",
+                        "tertiary": "#c8c6c5",
+                        "on-secondary": "#313030",
+                        "outline": "#8f8fa1",
+                        "error": "#ffb4ab",
+                        "background": "#121414",
+                        "secondary": "#c9c6c5",
+                        "on-primary": "#0005aa",
+                        "surface-container-highest": "#333535",
+                        "surface-bright": "#37393a",
+                        "on-tertiary-container": "#b6b4b3",
+                        "inverse-surface": "#e2e2e2",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e2e2e2",
+                        "inverse-on-surface": "#2f3131",
+                        "surface-container-low": "#1a1c1c",
+                        "surface-tint": "#bec2ff",
+                        "surface": "#121414",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "surface-dim": "#121414",
+                        "inverse-primary": "#3c46e9",
+                        "on-surface-variant": "#c6c5d8",
+                        "tertiary-container": "#464646",
+                        "tertiary-fixed": "#e4e2e1",
+                        "primary-fixed-dim": "#bec2ff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin": "40px",
+                        "grid_columns": "12",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "sm": "12px",
+                        "xs": "4px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "base": "8px"
+                    },
+                    fontFamily: {
+                        "h2": ["Space Grotesk"],
+                        "display": ["Space Grotesk"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "h1": ["Space Grotesk"],
+                        "label-caps": ["Space Grotesk"],
+                        "mono": ["Space Mono", "monospace"]
+                    },
+                    fontSize: {
+                        "h2": ["36px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "display": ["84px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h1": ["60px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .tech-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(143, 143, 161, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(143, 143, 161, 0.05) 1px, transparent 1px);
+        }
+        .glass-panel {
+            background: #121414;
+            border: 1px solid rgba(143, 143, 161, 0.2);
+        }
+        
+        .glitch-hover {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .glitch-hover:hover {
+            color: #fff;
+            text-shadow: 2px 0 #1a23d2, -2px 0 #ffb4ab;
+            transform: skewX(-2deg);
+        }
+
+        .glitch-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 35, 210, 0.1);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .glitch-hover:hover::before {
+            opacity: 1;
+            mix-blend-mode: color-dodge;
+        }
+
+        .tech-accent-border {
+            position: relative;
+        }
+        
+        .tech-accent-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            border-bottom: 2px solid #1a23d2;
+            border-right: 2px solid #1a23d2;
+            transition: all 0.3s ease;
+        }
+
+        .tech-accent-border:hover::after {
+            width: 100%;
+            height: 100%;
+            border-color: #1a23d2;
+            opacity: 0.3;
+        }
+
+        .mono-readout {
+            font-family: 'Space Mono', monospace;
+            letter-spacing: -0.05em;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/95 border-b border-outline-variant/30">
+<div class="flex justify-between items-center max-w-[1440px] mx-auto px-margin h-20">
+<a class="font-display text-h2 font-bold tracking-tighter text-on-surface glitch-hover" href="#">ORAIK</a>
+<div class="hidden md:flex gap-md font-mono text-xs items-center h-full tracking-widest uppercase">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors h-full flex items-center px-sm glitch-hover" href="#">Systems</a>
+<a class="text-on-surface border-b border-primary-container h-full flex items-center px-sm mt-1" href="#">Projects</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors h-full flex items-center px-sm glitch-hover" href="#">Specs</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors h-full flex items-center px-sm glitch-hover" href="#">Portal</a>
+</div>
+<div class="flex items-center gap-sm">
+<button class="border border-primary-container text-on-surface font-mono text-xs px-md py-sm hover:bg-primary-container hover:text-white transition-colors active:scale-95 uppercase tracking-widest glitch-hover">LAUNCH</button>
+<button aria-label="person" class="text-on-surface-variant hover:text-primary-container transition-colors p-sm">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden tech-grid bg-background">
+<div class="relative z-10 text-left px-margin max-w-[1440px] mx-auto w-full flex flex-col items-start pt-xl">
+<div class="font-mono text-xs text-primary-container tracking-[0.2em] mb-md flex items-center gap-xs">
+<span class="w-2 h-2 bg-primary-container block"></span> SYS.INIT_SEQUENCE
+                </div>
+<h1 class="font-display text-[80px] md:text-[140px] leading-[0.9] tracking-tighter text-on-surface font-bold mb-md">
+                    ORAIK<span class="text-primary-container">.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-xl border-l border-primary-container pl-md">
+                    Engineering the future through high-performance cybernetic systems. Raw power meets microscopic precision.
+                </p>
+<div class="flex gap-md font-mono text-xs uppercase tracking-widest">
+<a class="bg-primary-container text-white px-lg py-md transition-all active:scale-95 glitch-hover" href="#systems">
+                        EXPLORE SYSTEMS
+                    </a>
+<a class="border border-outline-variant/50 text-on-surface px-lg py-md hover:border-primary-container transition-all active:scale-95 tech-accent-border" href="#specs">
+                        VIEW SPECS
+                    </a>
+</div>
+</div>
+</section>
+<!-- Featured Systems -->
+<section class="py-xl px-margin max-w-[1440px] mx-auto" id="systems">
+<div class="flex justify-between items-end mb-lg border-b border-outline-variant/30 pb-sm">
+<div>
+<span class="font-mono text-xs text-primary-container tracking-[0.2em] block mb-sm">01 // DEPLOYMENTS</span>
+<h2 class="font-display text-h2 text-on-surface">Featured Systems</h2>
+</div>
+<a class="font-mono text-xs text-on-surface-variant hover:text-primary-container flex items-center gap-xs tracking-widest uppercase glitch-hover" href="#">
+                    VIEW ALL <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- System Card 1 -->
+<div class="glass-panel group cursor-pointer relative overflow-hidden transition-all duration-300 hover:border-primary-container tech-accent-border">
+<div class="aspect-video bg-surface-container-low relative border-b border-outline-variant/30">
+<img alt="A high-performance cybernetic hardware component. The piece is rendered in a tech-noir aesthetic with sleek black metallic surfaces and sharp geometric lines. Intense, piercing cobalt blue LED lights emit from the internal circuitry, creating a stark contrast against the dark background. The lighting is cinematic, highlighting the precision engineering and raw power of the technology." class="object-cover w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0 mix-blend-luminosity group-hover:mix-blend-normal" data-alt="A high-performance cybernetic hardware component. The piece is rendered in a tech-noir aesthetic with sleek black metallic surfaces and sharp geometric lines. Intense, piercing cobalt blue LED lights emit from the internal circuitry, creating a stark contrast against the dark background. The lighting is cinematic, highlighting the precision engineering and raw power of the technology." src="https://lh3.googleusercontent.com/aida/ADBb0ugtmPtamSsq8PsHav5A7PwurIldjiUDezXoQfF6a5PR15ES2tC5ArHoEUeL7jVOqZtKlgE3ghab90QD-ZdUCVRdXWrM-NBGtiL2tmFh6F_Ar33vbehs8ftg_YuA8Ed1iJcUmEXrFuFAeYsLXiX998KBzgtTnlIvKsE_Cwnuyk3qYCeGYwJAvFVtwJwOOfxOtc4B8T85zFsWFdFU7JR-4PU2S_1mlYfFVK5ZRGxe0bKWp5usjQmgfK088qqt7xT0LOEC4E5UTOu-mQ"/>
+<div class="absolute inset-0 bg-primary-container/5 mix-blend-overlay"></div>
+<div class="absolute top-sm right-sm flex gap-xs">
+<span class="w-1 h-4 bg-primary-container/40 block"></span>
+<span class="w-1 h-4 bg-primary-container block"></span>
+</div>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-sm">
+<h3 class="font-display text-h2 text-on-surface glitch-hover">NEXUS-09 Core</h3>
+<span class="bg-transparent text-primary-container font-mono text-[10px] tracking-widest px-xs py-[2px] border border-primary-container uppercase">ACTIVE</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Quantum processing unit optimized for deep-space telemetry.</p>
+</div>
+</div>
+<!-- System Card 2 -->
+<div class="glass-panel group cursor-pointer relative overflow-hidden transition-all duration-300 hover:border-primary-container tech-accent-border">
+<div class="aspect-video bg-surface-container-low relative border-b border-outline-variant/30">
+<img alt="An abstract, 3D visualization of data flow inside a quantum processor. The composition features a complex matrix of glowing neon blue lines intersecting across a deep, pitch-black void. Sparks of bright white energy travel along the pathways, simulating high-speed processing. The overall vibe is futuristic, fast, and heavily influenced by tech-noir and cyberpunk aesthetics." class="object-cover w-full h-full opacity-60 group-hover:opacity-100 transition-opacity duration-500 grayscale group-hover:grayscale-0 mix-blend-luminosity group-hover:mix-blend-normal" data-alt="An abstract, 3D visualization of data flow inside a quantum processor. The composition features a complex matrix of glowing neon blue lines intersecting across a deep, pitch-black void. Sparks of bright white energy travel along the pathways, simulating high-speed processing. The overall vibe is futuristic, fast, and heavily influenced by tech-noir and cyberpunk aesthetics." src="https://lh3.googleusercontent.com/aida/ADBb0ugqU9whJ7GXIm9izezdLzTGs4yg--2W8Qfd5gTrYbLAwOmJWXZHvhzGHR1eArCTSmxAVGgjFv7CI6-E96z-gNFtb0H7P2lGyVzyQvcCW-3j-_y6Du7cc2kMbUNt76X6RQXeiNrtBLTvj5f9NygBha_heSFVh9wMWEcMFiYXmsGJQVxEYGxChtmzKjrGz9N6yJfodAZFd9si6Ruo_PlnLwFGaiSu_ld_MQuMOuUi7zr-6aUuinCO8waWXES0Xx41NCP4e55Rnyb4MG4"/>
+<div class="absolute inset-0 bg-primary-container/5 mix-blend-overlay"></div>
+<div class="absolute top-sm right-sm flex gap-xs">
+<span class="w-1 h-4 bg-outline-variant block"></span>
+<span class="w-1 h-4 bg-outline-variant block"></span>
+</div>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-sm">
+<h3 class="font-display text-h2 text-on-surface glitch-hover">AETHER Network</h3>
+<span class="bg-transparent text-outline-variant font-mono text-[10px] tracking-widest px-xs py-[2px] border border-outline-variant uppercase">BETA</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Distributed neural framework for automated threat response.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats / Data Viz Section -->
+<section class="py-xl border-y border-outline-variant/30 bg-surface tech-grid relative">
+<div class="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background pointer-events-none"></div>
+<div class="max-w-[1440px] mx-auto px-margin relative z-10">
+<span class="font-mono text-xs text-primary-container tracking-[0.2em] block mb-lg text-center uppercase">SYSTEM TELEMETRY</span>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<div class="border border-outline-variant/30 p-md text-center bg-background hover:border-primary-container transition-colors glitch-hover">
+<div class="mono-readout text-[48px] md:text-h1 text-on-surface mb-xs font-bold">99.9<span class="text-primary-container">%</span></div>
+<div class="font-mono text-[10px] tracking-widest text-on-surface-variant uppercase">UPTIME LOG</div>
+</div>
+<div class="border border-outline-variant/30 p-md text-center bg-background hover:border-primary-container transition-colors glitch-hover">
+<div class="mono-readout text-[48px] md:text-h1 text-on-surface mb-xs font-bold">14.2<span class="text-h2 font-mono text-outline-variant">PB</span></div>
+<div class="font-mono text-[10px] tracking-widest text-on-surface-variant uppercase">DATA PROCESSED</div>
+</div>
+<div class="border border-outline-variant/30 p-md text-center bg-background hover:border-primary-container transition-colors glitch-hover">
+<div class="mono-readout text-[48px] md:text-h1 text-on-surface mb-xs font-bold">0.4<span class="text-h2 font-mono text-outline-variant">ms</span></div>
+<div class="font-mono text-[10px] tracking-widest text-on-surface-variant uppercase">LATENCY AVG</div>
+</div>
+<div class="border border-primary-container/50 p-md text-center bg-primary-container/5 hover:bg-primary-container/10 transition-colors glitch-hover relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[2px] bg-primary-container"></div>
+<div class="mono-readout text-[48px] md:text-h1 text-primary-container mb-xs font-bold">SYS_OK</div>
+<div class="font-mono text-[10px] tracking-widest text-primary-container uppercase">GLOBAL STATUS</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-background w-full py-lg border-t border-outline-variant/30 mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter px-margin max-w-[1440px] mx-auto">
+<div class="md:col-span-4 flex flex-col gap-sm">
+<div class="font-display text-h1 text-on-surface tracking-tighter leading-none glitch-hover inline-block">ORAIK</div>
+<div class="font-mono text-[10px] tracking-widest text-on-surface-variant mt-md uppercase">
+                    © 2024 ORAIK TECH SYSTEMS. ALL RIGHTS RESERVED.
+                </div>
+</div>
+<div class="md:col-span-8 flex flex-wrap gap-lg md:justify-end items-start mt-md md:mt-0">
+<a class="font-mono text-xs text-on-surface-variant hover:text-primary-container uppercase tracking-widest transition-all glitch-hover" href="#">Hardware</a>
+<a class="font-mono text-xs text-on-surface-variant hover:text-primary-container uppercase tracking-widest transition-all glitch-hover" href="#">Software</a>
+<a class="font-mono text-xs text-on-surface-variant hover:text-primary-container uppercase tracking-widest transition-all glitch-hover" href="#">Privacy</a>
+<a class="font-mono text-xs text-on-surface-variant hover:text-primary-container uppercase tracking-widest transition-all glitch-hover" href="#">Terms</a>
+</div>
+</div>
+</footer>
+</body></html>

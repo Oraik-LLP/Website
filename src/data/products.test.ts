@@ -15,6 +15,8 @@ describe('products data', () => {
     ]);
 
     expect(getProductBySlug('fixease')?.shortDescription).toContain('AI Car Diagnostics');
+    expect(getProductBySlug('fixease')?.logo).toBe('/assets/fixease/wrench-logo.png');
+    expect(getProductBySlug('fixease')?.catalogImage).toBe('/assets/fixease/car-default-hero.png');
     expect(getProductBySlug('fixease')?.features).toContain('Urgent symptom diagnosis');
     expect(getProductBySlug('agent-zero')?.shortDescription).toContain('meeting AI assistant');
     expect(getProductBySlug('agent-zero')?.logo).toBe('/assets/products/agentzero-logo.png');

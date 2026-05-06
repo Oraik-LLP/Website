@@ -4,17 +4,15 @@ import { Link } from 'react-router-dom';
 import { Product } from '../data/products';
 
 export function ProductCard({ product, index }: { product: Product; index: number }) {
-  const catalogImage = product.catalogImage ?? product.logo;
-
   return (
     <Link
       className="product-card slash-hover"
-      style={{ '--product-logo': `url("${catalogImage}")` } as CSSProperties}
+      style={{ '--product-logo': `url("${product.logo}")` } as CSSProperties}
       to={`/products/${product.slug}`}
     >
       <div className="card-index">{String(index + 1).padStart(2, '0')}</div>
       <div className="product-art">
-        <img src={catalogImage} alt={`${product.name} logo`} />
+        <img src={product.logo} alt={`${product.name} logo`} />
       </div>
       <div className="product-card-body">
         <span>{product.eyebrow}</span>

@@ -5,7 +5,7 @@ import { Settings } from './Settings';
 import { ThemeProvider } from '../theme/ThemeProvider';
 
 describe('Settings page', () => {
-  it('includes typical appearance and site preference controls beyond theme', () => {
+  it('only exposes the theme controls', () => {
     render(
       <ThemeProvider>
         <MemoryRouter>
@@ -14,9 +14,11 @@ describe('Settings page', () => {
       </ThemeProvider>,
     );
 
-    expect(screen.getByText('Interface density')).toBeInTheDocument();
-    expect(screen.getByText('Dynamic grid')).toBeInTheDocument();
-    expect(screen.getByText('Motion')).toBeInTheDocument();
-    expect(screen.getByText('Contact shortcuts')).toBeInTheDocument();
+    expect(screen.getByText('Dark')).toBeInTheDocument();
+    expect(screen.getByText('Light')).toBeInTheDocument();
+    expect(screen.queryByText('Interface density')).not.toBeInTheDocument();
+    expect(screen.queryByText('Dynamic grid')).not.toBeInTheDocument();
+    expect(screen.queryByText('Motion')).not.toBeInTheDocument();
+    expect(screen.queryByText('Contact shortcuts')).not.toBeInTheDocument();
   });
 });

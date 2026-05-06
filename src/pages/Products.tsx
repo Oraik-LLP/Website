@@ -9,7 +9,7 @@ export function Products() {
         <h1>Oraik product index</h1>
         <p>Scrollable launch catalog with detail pages, repo links, and store availability states.</p>
       </div>
-      <div className="product-list">
+      <div className="product-mini-grid" aria-label="Product catalog">
         {products.map((product, index) => (
           <ProductCard key={product.slug} product={product} index={index} />
         ))}

@@ -41,8 +41,8 @@ export const products: Product[] = [
     shortDescription: 'AI Car Diagnostics for symptoms, photos, live video, and vehicle health scoring.',
     longDescription:
       'FixEase is a personal AI mechanic for vehicle owners. It supports urgent symptom diagnosis, photo-based issue review, Gemini Live beta assistance, report history, component scoring, and Indian-market vehicle coverage.',
-    logo: '/assets/fixease/fixease-logo.png',
-    catalogImage: '/assets/fixease/fixease-logo.png',
+    logo: '/assets/fixease/wrench-logo.png',
+    catalogImage: '/assets/fixease/car-default-hero.png',
     heroImage: '/assets/fixease/car-default-hero.png',
     tags: ['AI/ML', 'Auto & Vehicles', 'Gemini', 'Flutter'],
     features: [

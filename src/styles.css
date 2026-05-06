@@ -892,6 +892,12 @@ p {
   gap: 0.9rem;
 }
 
+.product-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.9rem;
+}
+
 .product-card {
   position: relative;
   min-height: 360px;
@@ -939,6 +945,13 @@ p {
   align-items: stretch;
 }
 
+.product-mini-grid .product-card {
+  min-height: 0;
+  aspect-ratio: 1;
+  justify-content: center;
+  overflow: hidden;
+}
+
 .product-card:hover {
   border-color: var(--primary);
   background: color-mix(in srgb, var(--surface) 90%, var(--primary) 10%);
@@ -969,16 +982,25 @@ p {
   border-bottom: 0;
 }
 
+.product-mini-grid .product-art {
+  min-height: 58%;
+  border-bottom: 1px solid var(--line);
+}
+
 .product-art img {
-  width: min(76%, 220px);
-  aspect-ratio: 16 / 7;
-  height: auto;
+  width: 120px;
+  height: 120px;
   object-fit: contain;
 }
 
 .product-list .product-art img {
-  width: 84px;
-  max-height: 64px;
+  width: 76px;
+  height: 76px;
+}
+
+.product-mini-grid .product-art img {
+  width: 78px;
+  height: 78px;
 }
 
 .product-card-body {
@@ -993,6 +1015,25 @@ p {
 
 .product-card-body h3 {
   font-size: 1.65rem;
+}
+
+.product-mini-grid .product-card-body {
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.75rem;
+}
+
+.product-mini-grid .product-card-body h3 {
+  font-size: 1rem;
+}
+
+.product-mini-grid .product-card-body > span {
+  font-size: 0.62rem;
+}
+
+.product-mini-grid .product-card-body p,
+.product-mini-grid .tag-row {
+  display: none;
 }
 
 .product-card-body p {
@@ -1235,6 +1276,91 @@ p {
   line-height: 1.6;
 }
 
+.about-split-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.compact-heading {
+  margin-top: 1rem;
+}
+
+.compact-heading h2 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.leadership-grid,
+.approach-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.leadership-card,
+.approach-card {
+  position: relative;
+  min-height: 220px;
+  padding: 1.3rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.leadership-card::before,
+.approach-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0 42%, color-mix(in srgb, var(--primary) 16%, transparent) 42% 44%, transparent 44%),
+    radial-gradient(circle at 85% 15%, color-mix(in srgb, var(--primary) 13%, transparent), transparent 32%);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.leadership-card:hover::before,
+.approach-card:hover::before {
+  opacity: 1;
+}
+
+.leadership-card > *,
+.approach-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.leadership-card span,
+.approach-card span {
+  display: inline-flex;
+  color: var(--primary);
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.leadership-card h3 {
+  margin: 1rem 0 0.35rem;
+  font-size: clamp(1.55rem, 3vw, 2.3rem);
+}
+
+.leadership-card strong {
+  display: block;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.leadership-card p,
+.approach-card p {
+  margin-top: 1rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.approach-card {
+  min-height: 170px;
+}
+
 .contact-band {
   display: flex;
   flex-wrap: wrap;
@@ -1250,6 +1376,28 @@ p {
   color: var(--text);
 }
 
+.about-contact-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+}
+
+.about-contact-panel p {
+  max-width: 620px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.about-contact-panel small {
+  display: block;
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
 .settings-page {
   min-height: calc(100vh - 76px);
 }
@@ -1262,6 +1410,10 @@ p {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(360px, 1.15fr);
   gap: 1rem;
+}
+
+.theme-only-panel {
+  max-width: 720px;
 }
 
 .settings-panel {
@@ -1388,6 +1540,8 @@ p {
   .service-strip,
   .product-grid,
   .about-cards,
+  .leadership-grid,
+  .approach-grid,
   .settings-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1456,6 +1610,8 @@ p {
   .service-strip,
   .product-grid,
   .about-cards,
+  .leadership-grid,
+  .approach-grid,
   .capability-list,
   .theme-choice,
   .slide-metrics,

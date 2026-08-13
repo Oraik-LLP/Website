@@ -1,4 +1,5 @@
-import { Bot, Cpu, Github, Instagram, Linkedin, Mail, MapPin, Phone, Shield, Wrench } from 'lucide-react';
+import { Bot, Cpu, Shield, Wrench } from 'lucide-react';
+import { useContent } from '../engine/ContentProvider';
 
 const aboutCards = [
   {
@@ -23,13 +24,6 @@ const aboutCards = [
   },
 ];
 
-const socialItems = [
-  { label: 'GitHub', href: 'https://github.com/Oraik-LLP', icon: Github },
-  { label: 'LinkedIn', href: '#linkedin', icon: Linkedin },
-  { label: 'Instagram', href: '#instagram', icon: Instagram },
-  { label: 'Email', href: 'mailto:contact@oraik.co', icon: Mail },
-];
-
 const leaders = [
   {
     name: 'Manav Vivek Modi',
@@ -37,7 +31,7 @@ const leaders = [
     copy: 'Driving technical architecture, local-first AI systems, and rapid venture building.',
   },
   {
-    name: 'Masoom Hathi',
+    name: 'Masoom Monil Hathi',
     title: 'Co-Founder & Designated Partner',
     copy: 'Leading operational strategy, business development, and system scaling for high-volume deployment.',
   },
@@ -55,19 +49,23 @@ const approachPoints = [
 ];
 
 export function About() {
+  const { page } = useContent();
+  const content = page('about');
+  const runtimeCards = Array.isArray(content.serviceCards) ? content.serviceCards as typeof aboutCards : aboutCards;
+  const runtimeLeaders = Array.isArray(content.leadership) ? content.leadership as typeof leaders : leaders;
+  const runtimeApproach = Array.isArray(content.approach) ? content.approach as typeof approachPoints : approachPoints;
   return (
     <section className="page-section about-page tech-grid">
       <div className="section-heading">
-        <span>About // Oraik Systems</span>
-        <h1>India-based builders for software, security, AI, and connected systems.</h1>
+        <span>{String(content.eyebrow ?? 'About // Oraik Systems')}</span>
+        <h1>{String(content.headline ?? 'India-based builders for software, security, AI, and connected systems.')}</h1>
         <p>
-          Oraik Systems is a 2026 technology company designing, maintaining, and optimizing products across
-          cybersecurity, AI/ML, IoT, IT, mobile apps, and custom system consultancy.
+          {String(content.introduction ?? 'Oraik Systems is a 2026 technology company designing, maintaining, and optimizing products across cybersecurity, AI/ML, IoT, IT, mobile apps, and custom system consultancy.')}
         </p>
       </div>
       <div className="about-cards">
-        {aboutCards.map((card) => {
-          const Icon = card.icon;
+        {runtimeCards.map((card, index) => {
+          const Icon = [Cpu, Shield, Bot, Wrench][index % 4];
           return (
             <article key={card.title} className="about-card slash-hover">
               <Icon size={24} />
@@ -83,7 +81,7 @@ export function About() {
           <h2>Leadership & Philosophy</h2>
         </div>
         <div className="leadership-grid">
-          {leaders.map((leader) => (
+          {runtimeLeaders.map((leader) => (
             <article key={leader.name} className="leadership-card slash-hover">
               <span>Designated Partner</span>
               <h3>{leader.name}</h3>
@@ -97,46 +95,12 @@ export function About() {
           <h2>Our Approach</h2>
         </div>
         <div className="approach-grid">
-          {approachPoints.map((point) => (
+          {runtimeApproach.map((point) => (
             <article key={point.title} className="approach-card slash-hover">
               <span>{point.title}</span>
               <p>{point.copy}</p>
             </article>
           ))}
-        </div>
-      </section>
-      <section className="about-contact-panel">
-        <div>
-          <div className="footer-brand">
-            <Cpu size={22} />
-            <strong>Oraik Systems LLP</strong>
-          </div>
-          <p>Software solutions, product design, apps, AI/ML, cybersecurity, IoT, and IT consultancy.</p>
-          <div className="footer-contact">
-            <span>
-              <MapPin size={16} />
-              1405, Siddhesh Apartment, Thakurdwar, Kalbadevi, L.T. Marg Police Station, Mumbai, Mumbai- 400002, Maharashtra, India
-            </span>
-            <a href="mailto:contact@oraik.co">
-              <Mail size={16} />
-              contact@oraik.co
-            </a>
-            <a href="tel:+917400354911">
-              <Phone size={16} />
-              7400354911
-            </a>
-          </div>
-          <small>Est. 2026 // Oraik Systems LLP</small>
-        </div>
-        <div className="footer-socials">
-          {socialItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <a key={item.label} className="icon-button" href={item.href} aria-label={item.label}>
-                <Icon size={18} />
-              </a>
-            );
-          })}
         </div>
       </section>
     </section>

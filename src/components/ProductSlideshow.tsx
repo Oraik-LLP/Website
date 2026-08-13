@@ -1,13 +1,14 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getFeaturedProducts } from '../data/products';
-
-const featuredProducts = getFeaturedProducts();
+import { useContent } from '../engine/ContentProvider';
 
 export function ProductSlideshow() {
+  const { products } = useContent();
+  const featuredProducts = products.filter((product) => product.featured && product.ownership !== 'solo');
   const [activeIndex, setActiveIndex] = useState(0);
-  const product = featuredProducts[activeIndex];
+  const product = featuredProducts[activeIndex] ?? featuredProducts[0];
+  if (!product) return null;
   const catalogImage = product.catalogImage ?? product.logo;
 
   const move = (direction: number) => {
@@ -34,12 +35,32 @@ export function ProductSlideshow() {
           <span>{product.eyebrow}</span>
           <h3>{product.name}</h3>
           <p>{product.longDescription}</p>
-          <Link className="button-primary slash-hover" to={`/products/${product.slug}`}>
-            Open product
-            <ArrowRight size={18} />
-          </Link>
+          {product.redirectToProductSite && product.productSite ? (
+            <a className="button-primary slash-hover" href={product.productSite} target={product.openInNewTab === false ? undefined : '_blank'} rel={product.openInNewTab === false ? undefined : 'noreferrer'}>
+              Open product
+              <ArrowRight size={18} />
+            </a>
+          ) : (
+            <Link className="button-primary slash-hover" to={`/products/${product.slug}`}>
+              Open product
+              <ArrowRight size={18} />
+            </Link>
+          )}
         </div>
-        <Link className="slide-visual" to={`/products/${product.slug}`}>
+        {product.redirectToProductSite && product.productSite ? (
+          <a className="slide-visual" href={product.productSite} target={product.openInNewTab === false ? undefined : '_blank'} rel={product.openInNewTab === false ? undefined : 'noreferrer'}>
+            <img src={catalogImage} alt={`${product.name} preview`} />
+            <div className="slide-metrics">
+              {product.metrics.map((metric) => (
+                <span key={metric.label}>
+                  <strong>{metric.value}</strong>
+                  {metric.label}
+                </span>
+              ))}
+            </div>
+          </a>
+        ) : (
+          <Link className="slide-visual" to={`/products/${product.slug}`}>
           <img src={catalogImage} alt={`${product.name} preview`} />
           <div className="slide-metrics">
             {product.metrics.map((metric) => (
@@ -49,7 +70,8 @@ export function ProductSlideshow() {
               </span>
             ))}
           </div>
-        </Link>
+          </Link>
+        )}
         <div className="slide-controls">
           <button className="icon-button" type="button" aria-label="Previous product" onClick={() => move(-1)}>
             <ArrowLeft size={18} />

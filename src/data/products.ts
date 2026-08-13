@@ -19,7 +19,19 @@ export type Product = {
   heroImage?: string;
   tags: string[];
   features: string[];
+  audiences?: string[];
+  workflow?: {
+    label: string;
+    title: string;
+    description: string;
+  }[];
+  principles?: string[];
   metrics: { label: string; value: string }[];
+  productSite?: string;
+  productSiteLabel?: string;
+  redirectToProductSite?: boolean;
+  openInNewTab?: boolean;
+  ownership?: 'oraik' | 'solo';
   links: {
     github: ProductLink;
     playStore: ProductLink;
@@ -53,17 +65,93 @@ export const products: Product[] = [
       'Engine, brakes, transmission, electrical, and suspension breakdowns',
       'Report history and subscription tiers',
     ],
+    audiences: ['Everyday vehicle owners', 'Drivers preparing for a workshop visit', 'Owners tracking multiple vehicles'],
+    workflow: [
+      {
+        label: '01 // Describe',
+        title: 'Start with the symptom',
+        description: 'Choose an urgent flow, describe what changed, and add the vehicle context that matters.',
+      },
+      {
+        label: '02 // Capture',
+        title: 'Add visual evidence',
+        description: 'Attach photos or use the live assistant when an image can make the problem easier to understand.',
+      },
+      {
+        label: '03 // Act',
+        title: 'Read the confidence, then decide',
+        description: 'Review likely systems, urgency, and component health before choosing the safest next step.',
+      },
+    ],
+    principles: ['Evidence before certainty', 'Safety-aware triage', 'Vehicle history stays understandable'],
     metrics: [
       { label: 'Version', value: '1.0.0+7' },
       { label: 'Modes', value: '3' },
       { label: 'Brands', value: '60+' },
     ],
+    productSite: 'https://fixease.oraik.co',
+    productSiteLabel: 'Open FixEase',
+    redirectToProductSite: true,
     links: {
       github: {
         label: 'GitHub',
         href: 'https://github.com/Oraik-LLP/FixEase',
         status: 'available',
       },
+      playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },
+      appStore: { label: 'App Store', href: comingSoon, status: 'coming-soon' },
+      fdroid: { label: 'F-Droid', href: comingSoon, status: 'coming-soon' },
+    },
+    featured: true,
+  },
+  {
+    slug: 'get-true-charge',
+    name: 'GetTrueCharge',
+    eyebrow: 'BILLING DISPUTE ENGINE',
+    category: 'Document Intelligence',
+    status: 'Live web product',
+    shortDescription: 'Upload an itemized bill and find specific charges that deserve evidence, explanation, or dispute.',
+    longDescription:
+      'GetTrueCharge reviews bills, estimates, ledgers, benefits statements, and supporting records for duplicate, unsupported, unbundled, or poorly explained charges. It shows a specific preview before payment and can prepare a document-grounded dispute packet.',
+    logo: '/assets/oraik/oraik-mini-light.png',
+    catalogImage: '/assets/oraik/oraik-dark-gradient.png',
+    tags: ['Document AI', 'Billing', 'Evidence', 'Web'],
+    features: [
+      'Document-first bill review',
+      'Specific finding before checkout',
+      'Support for healthcare, dental, veterinary, auto, moving, and other bills',
+      'Evidence checklist tailored to the dispute category',
+      'Structured dispute packet after unlock',
+      'No login required before preview',
+    ],
+    audiences: ['Patients and policyholders', 'Pet owners', 'Consumers challenging unclear service bills'],
+    workflow: [
+      {
+        label: '01 // Attach',
+        title: 'Upload the evidence',
+        description: 'Start with the itemized bill, then add estimates, benefits statements, notes, or correspondence.',
+      },
+      {
+        label: '02 // Review',
+        title: 'See the strongest finding',
+        description: 'The system identifies a specific charge or documentation gap before asking you to unlock anything.',
+      },
+      {
+        label: '03 // Dispute',
+        title: 'Generate a focused packet',
+        description: 'Turn the finding into a calm, document-specific request for explanation, correction, or evidence.',
+      },
+    ],
+    principles: ['Documents over assumptions', 'Preview before payment', 'No guaranteed outcome claims'],
+    metrics: [
+      { label: 'Preview', value: 'Free' },
+      { label: 'Login', value: 'Not first' },
+      { label: 'Input', value: 'Multi-file' },
+    ],
+    productSite: 'https://gettruecharge.com',
+    productSiteLabel: 'Run a bill audit',
+    links: {
+      github: { label: 'GitHub', href: comingSoon, status: 'coming-soon' },
       playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },
       appStore: { label: 'App Store', href: comingSoon, status: 'coming-soon' },
       fdroid: { label: 'F-Droid', href: comingSoon, status: 'coming-soon' },
@@ -90,6 +178,25 @@ export const products: Product[] = [
       'Post-meeting summaries, action items, and key discussion points',
       'PDF and Markdown Minutes of Meeting export',
     ],
+    audiences: ['Remote product teams', 'Consultants and operators', 'People who need reliable meeting follow-through'],
+    workflow: [
+      {
+        label: '01 // Detect',
+        title: 'Recognize the meeting',
+        description: 'Agent Zero detects supported meeting apps and asks for consent before capture starts.',
+      },
+      {
+        label: '02 // Assist',
+        title: 'Transcribe and clarify live',
+        description: 'Follow the conversation with transcription, suggestions, questions, and jargon explanations.',
+      },
+      {
+        label: '03 // Deliver',
+        title: 'Leave with structured output',
+        description: 'Convert the session into a summary, discussion points, action items, and exportable minutes.',
+      },
+    ],
+    principles: ['Consent before capture', 'Actionable output', 'Desktop-native workflow'],
     metrics: [
       { label: 'Platform', value: 'Desktop' },
       { label: 'Mode', value: 'Live' },
@@ -125,38 +232,7 @@ export const products: Product[] = [
       { label: 'Flow', value: 'Fast' },
       { label: 'Stores', value: 'Soon' },
     ],
-    links: {
-      github: { label: 'GitHub', href: comingSoon, status: 'coming-soon' },
-      playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },
-      appStore: { label: 'App Store', href: comingSoon, status: 'coming-soon' },
-      fdroid: { label: 'F-Droid', href: comingSoon, status: 'coming-soon' },
-    },
-    featured: true,
-  },
-  {
-    slug: 'xpdf',
-    name: 'xPDF',
-    eyebrow: 'DOCUMENT OPS',
-    category: 'Productivity',
-    status: 'Coming soon',
-    shortDescription: 'All-in-one mobile PDF suite to create, edit, convert, scan, compress, merge, and secure PDFs.',
-    longDescription:
-      'xPDF is an all-in-one mobile PDF suite that lets users create, edit, convert, scan, compress, merge, and secure PDFs. It uses a feature-first Flutter architecture with offline storage and PDF processing tools.',
-    logo: '/assets/products/xpdf-logo.png',
-    catalogImage: '/assets/products/xpdf-catalog.png',
-    tags: ['Documents', 'PDF', 'Offline'],
-    features: [
-      'Create PDFs from documents and images',
-      'Split pages, add watermarks, and insert page numbers',
-      'Password lock, unlock, and security checks',
-      'Document scanning and compression',
-      'Merge PDFs into a single readable file',
-    ],
-    metrics: [
-      { label: 'Format', value: 'PDF' },
-      { label: 'Mode', value: 'All-in-one' },
-      { label: 'Access', value: 'Mobile' },
-    ],
+    ownership: 'solo',
     links: {
       github: { label: 'GitHub', href: comingSoon, status: 'coming-soon' },
       playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },
@@ -200,100 +276,66 @@ export const products: Product[] = [
   },
   {
     slug: 'local-lm',
-    name: 'Local-LM',
-    eyebrow: 'ON-DEVICE LLM',
+    name: 'Phos',
+    eyebrow: 'PRIVATE LOCAL AI',
     category: 'AI/ML',
-    status: 'Concept',
-    shortDescription: 'A privacy-focused offline LLM for phones with fast local chat, multimodal help, and simple controls.',
+    status: 'Live on Android',
+    shortDescription: 'A private, local-first AI companion for on-device models, BYOK providers, and user-controlled servers.',
     longDescription:
-      'Local-LM is planned as an on-device AI assistant for phones: fast, intelligent, privacy-first, and usable without cloud dependency. The product direction centers on local chat, multimodal prompts, lightweight model control, and an interface that keeps advanced AI easy to use.',
+      'Phos is a private AI companion for Android. It can run supported models on-device, connect to providers using your own keys, or use a local server you control. Chats, memories, model setup, and provider boundaries are designed to stay visible.',
     logo: '/assets/products/local-lm-logo.png',
     catalogImage: '/assets/products/local-lm-catalog.png',
     tags: ['Offline LLM', 'Mobile AI', 'Privacy', 'Multimodal'],
     features: [
-      'Offline local language model runtime',
-      'Privacy-focused prompts and responses',
-      'Fast mobile-first assistant experience',
-      'Multimodal text and image workflows',
-      'Simple controls for advanced model behavior',
-      'Designed for low-friction daily use',
+      'On-device GGUF and LiteRT model support',
+      'Bring-your-own-key provider connections',
+      'Ollama, LM Studio, and compatible local servers',
+      'Guided thinking, writing, planning, and brainstorming workflows',
+      'Visible privacy and provider boundaries',
+      'No account, ads, tracking, or purchases in V1',
     ],
+    audiences: ['Privacy-conscious Android users', 'People exploring local AI', 'Advanced users connecting their own models and providers'],
+    workflow: [
+      {
+        label: '01 // Fit',
+        title: 'Choose a stable path',
+        description: 'Phos checks the device and helps select local, provider, or local-server mode.',
+      },
+      {
+        label: '02 // Think',
+        title: 'Work through real tasks',
+        description: 'Use private chat and guided workflows for decisions, drafts, study, planning, and ideas.',
+      },
+      {
+        label: '03 // Control',
+        title: 'Keep the boundary visible',
+        description: 'See which model or provider is active and change the route when the task demands it.',
+      },
+    ],
+    principles: ['Local-first, not local-only', 'No company cloud for private data', 'Advanced controls without unnecessary friction'],
     metrics: [
-      { label: 'Mode', value: 'Offline' },
-      { label: 'Privacy', value: 'Local' },
-      { label: 'Input', value: 'Multi' },
+      { label: 'Mode', value: 'Local-first' },
+      { label: 'Account', value: 'None' },
+      { label: 'Platform', value: 'Android' },
     ],
+    productSite: 'https://phos.oraik.co',
+    productSiteLabel: 'Open Phos',
+    redirectToProductSite: true,
     links: {
       github: { label: 'GitHub', href: comingSoon, status: 'coming-soon' },
-      playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },
-      appStore: { label: 'App Store', href: comingSoon, status: 'coming-soon' },
-      fdroid: { label: 'F-Droid', href: comingSoon, status: 'coming-soon' },
-    },
-    featured: true,
-  },
-  {
-    slug: 'orkzoid',
-    name: 'Orkzoid',
-    eyebrow: 'AUTONOMOUS SECURITY',
-    category: 'Cybersecurity',
-    status: 'Public repo',
-    shortDescription: 'Autonomous security tooling for threat intelligence and shadow API exposure.',
-    longDescription:
-      'Orkzoid is a Python-based security platform for offensive security professionals, bug bounty hunters, and DevSecOps teams. It scans targets, correlates services with CVEs, ranks attack vectors, generates remediation playbooks, and discovers undocumented API endpoints.',
-    logo: '/assets/products/orkzoid-logo.png',
-    catalogImage: '/assets/products/orkzoid-catalog.png',
-    tags: ['Cybersecurity', 'DevSecOps', 'Python', 'Threat Intel'],
-    features: [
-      'CVE correlation using NVD',
-      'CVSS-based attack vector scoring',
-      'Automated remediation playbooks',
-      'Shadow API attack surface management',
-      'OpenAPI diffing and firewall kill-list reports',
-    ],
-    metrics: [
-      { label: 'Modes', value: '2' },
-      { label: 'Reports', value: 'JSON/MD' },
-      { label: 'License', value: 'MIT' },
-    ],
-    links: {
-      github: {
-        label: 'GitHub',
-        href: 'https://github.com/Oraik-LLP/Orkzoid',
+      playStore: {
+        label: 'Google Play',
+        href: 'https://play.google.com/store/apps/details?id=co.oraik.phos',
         status: 'available',
       },
-      playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },
       appStore: { label: 'App Store', href: comingSoon, status: 'coming-soon' },
       fdroid: { label: 'F-Droid', href: comingSoon, status: 'coming-soon' },
     },
     featured: true,
-  },
-  {
-    slug: 'bastepin',
-    name: 'Bastepin',
-    eyebrow: 'ROOM-CODE PASTE',
-    category: 'Web Utility',
-    status: 'Concept',
-    shortDescription: 'A free-to-use pastebin without login, built around simple room codes.',
-    longDescription:
-      'Bastepin is planned as a frictionless paste-sharing utility: no account, no long setup, just a room code for quick text exchange and short-lived collaboration.',
-    logo: '/assets/oraik/oraik-light-gradient.png',
-    tags: ['Web', 'Utility', 'No-login'],
-    features: ['Room-code sharing', 'No login required', 'Quick paste retrieval', 'Minimal collaboration flow'],
-    metrics: [
-      { label: 'Login', value: 'No' },
-      { label: 'Share', value: 'Code' },
-      { label: 'Cost', value: 'Free' },
-    ],
-    links: {
-      github: { label: 'GitHub', href: comingSoon, status: 'coming-soon' },
-      playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },
-      appStore: { label: 'App Store', href: comingSoon, status: 'coming-soon' },
-      fdroid: { label: 'F-Droid', href: comingSoon, status: 'coming-soon' },
-    },
-    featured: false,
   },
 ];
 
 export const getProductBySlug = (slug: string) => products.find((product) => product.slug === slug);
 
-export const getFeaturedProducts = () => products.filter((product) => product.featured);
+export const getFeaturedProducts = () =>
+  products.filter((product) => product.featured && product.ownership !== 'solo');

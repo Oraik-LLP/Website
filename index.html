@@ -3,12 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090a0b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#e9edf2" media="(prefers-color-scheme: light)" />
+    <script>
+      try {
+        const storedTheme = localStorage.getItem('oraik-theme');
+        const theme =
+          storedTheme === 'dark' || storedTheme === 'light'
+            ? storedTheme
+            : matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.className = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    </script>
     <meta
       name="description"
-      content="Oraik Systems builds software solutions, AI/ML products, cybersecurity tooling, IoT systems, and mobile apps."
+      content="Oraik Systems builds private AI, cybersecurity tools, mobile apps, automotive intelligence, and document workflow products."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Oraik Systems" />
+    <meta property="og:title" content="Oraik Systems | Independent Product Systems" />
+    <meta
+      property="og:description"
+      content="Focused software across private AI, cybersecurity, mobile utilities, automotive intelligence, and document workflows."
+    />
+    <meta property="og:url" content="https://oraik.co/" />
+    <meta property="og:image" content="https://oraik.co/og-minimal-dark-v2.png" />
+    <meta property="og:image:alt" content="Oraik Systems independent product systems" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Oraik Systems | Independent Product Systems" />
+    <meta
+      name="twitter:description"
+      content="Focused software across private AI, cybersecurity, mobile utilities, automotive intelligence, and document workflows."
+    />
+    <meta name="twitter:image" content="https://oraik.co/og-minimal-dark-v2.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-dark-transparent-32x32.png" />
-    <title>Oraik Systems</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Oraik Systems LLP",
+        "url": "https://oraik.co",
+        "logo": "https://oraik.co/assets/oraik/oraik-light-gradient.png",
+        "email": "contact@oraik.co",
+        "telephone": "+91-74003-54911",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1405, Siddhesh Apartment, Thakurdwar, Kalbadevi, L.T. Marg Police Station",
+          "addressLocality": "Mumbai",
+          "addressRegion": "Maharashtra",
+          "postalCode": "400002",
+          "addressCountry": "IN"
+        }
+      }
+    </script>
+    <title>Oraik Systems | Independent Product Systems</title>
   </head>
   <body>
     <div id="root"></div>

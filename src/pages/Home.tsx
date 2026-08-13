@@ -1,49 +1,61 @@
-import { ArrowRight, Bot, CircuitBoard, Code2, Shield, Smartphone } from 'lucide-react';
+import { ArrowRight, Bot, CircuitBoard, Code2, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ArticleCard } from '../components/ArticleCard';
 import { FixEaseSimulator } from '../components/FixEaseSimulator';
 import { ProductCard } from '../components/ProductCard';
 import { ProductSlideshow } from '../components/ProductSlideshow';
-import { products } from '../data/products';
+import { Seo } from '../components/Seo';
+import { useContent } from '../engine/ContentProvider';
 
 const services = [
-  { label: 'Cybersecurity systems', icon: Shield },
-  { label: 'AI and ML products', icon: Bot },
-  { label: 'Mobile apps', icon: Smartphone },
-  { label: 'IoT and IT solutions', icon: CircuitBoard },
+  'Cybersecurity systems',
+  'AI and ML products',
+  'Mobile applications',
+  'IoT and IT solutions',
 ];
 
 export function Home() {
-  const previewProducts = products.slice(0, 4);
+  const { posts: blogPosts, products, page } = useContent();
+  const content = page('home');
+  const pageServices = Array.isArray(content.services) ? content.services.map(String) : services;
+  const previewProducts = products.filter((product) => product.ownership !== 'solo').slice(0, 4);
 
   return (
     <>
+      <Seo
+        title="Independent software systems"
+        description="Oraik Systems builds private AI, cybersecurity tools, mobile apps, document intelligence, and focused software products from Mumbai, India."
+      />
       <section className="hero-section tech-grid">
         <div className="hero-copy">
-          <span className="eyebrow">SYS.INIT // EST. 2026</span>
-          <h1 className="typing-heading">Oraik builds sharp software systems for modern operators.</h1>
+          <span className="eyebrow">{String(content.eyebrow ?? 'INDEPENDENT PRODUCT SYSTEMS // MUMBAI')}</span>
+          <h1 className="typing-heading">{String(content.headline ?? 'Ideas. Engineered')}</h1>
           <p>
-            Software solutions, designs, mobile products, cybersecurity tools, AI/ML systems, IoT workflows, and
-            practical IT consultancy from India.
+            {String(
+              content.introduction ??
+                'Oraik builds focused products across private AI, cybersecurity, mobile utilities, automotive intelligence, and document workflows.',
+            )}
           </p>
           <div className="hero-actions">
-            <Link className="button-primary slash-hover" to="/products">
-              Explore products
+            <Link className="button-primary slash-hover" to={String(content.primaryCtaUrl ?? '/products')}>
+              {String(content.primaryCtaLabel ?? 'Explore products')}
               <ArrowRight size={18} />
             </Link>
-            <Link className="button-secondary slash-hover" to="/about">
-              About Oraik
+            <Link className="button-secondary slash-hover" to={String(content.secondaryCtaUrl ?? '/about')}>
+              {String(content.secondaryCtaLabel ?? 'About Oraik')}
             </Link>
           </div>
           <div className="service-strip" aria-label="Oraik service areas">
-            {services.map((service) => {
-              const Icon = service.icon;
-              return (
-                <span key={service.label}>
-                  <Icon size={16} />
-                  {service.label}
-                </span>
-              );
-            })}
+            {pageServices.map((service, index) => (
+              <span key={service}>
+                <small>{String(index + 1).padStart(2, '0')}</small>
+                {service}
+              </span>
+            ))}
+          </div>
+          <div className="signal-rail" aria-hidden="true">
+            <span>ORAIK // PRODUCT SYSTEMS // ACTIVE DEVELOPMENT // MUMBAI // </span>
+            <span>ORAIK // PRODUCT SYSTEMS // ACTIVE DEVELOPMENT // MUMBAI // </span>
           </div>
         </div>
         <div className="simulator-demo-block">
@@ -57,7 +69,7 @@ export function Home() {
       <section className="section-shell about-preview">
         <div className="section-heading">
           <span>02 // Portfolio</span>
-          <h2>Built across apps, security, AI, and tools</h2>
+          <h2>{String(content.portfolioHeading ?? 'Built across apps, security, AI, and tools')}</h2>
         </div>
         <div className="product-grid">
           {previewProducts.map((product, index) => (
@@ -69,7 +81,7 @@ export function Home() {
       <section className="section-shell capability-band">
         <div>
           <span className="eyebrow">03 // Consultancy</span>
-          <h2>Design, maintain, and optimize systems that have to keep moving.</h2>
+          <h2>{String(content.consultancyHeading ?? 'Design, maintain, and optimize systems that have to keep moving.')}</h2>
         </div>
         <div className="capability-list">
           <span>
@@ -89,6 +101,23 @@ export function Home() {
             IoT integration
           </span>
         </div>
+      </section>
+
+      <section className="section-shell home-journal">
+        <div className="section-heading">
+          <span>04 // Field Notes</span>
+          <h2>{String(content.fieldNotesHeading ?? 'The thinking behind the systems.')}</h2>
+          <p>{String(content.fieldNotesIntroduction ?? 'Practical guides, product boundaries, and engineering notes connected directly to Oraik products.')}</p>
+        </div>
+        <div className="article-grid">
+          {blogPosts.slice(0, 3).map((post) => (
+            <ArticleCard key={post.slug} post={post} />
+          ))}
+        </div>
+        <Link className="text-link" to="/resources">
+          Browse all field notes
+          <ArrowRight size={17} />
+        </Link>
       </section>
     </>
   );

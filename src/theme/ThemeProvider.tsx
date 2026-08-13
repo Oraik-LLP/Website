@@ -11,6 +11,10 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 const storageKey = 'oraik-theme';
+const themeColors: Record<Theme, string> = {
+  dark: '#090a0b',
+  light: '#e9edf2',
+};
 
 const getInitialTheme = (): Theme => {
   if (typeof window === 'undefined') {
@@ -18,7 +22,13 @@ const getInitialTheme = (): Theme => {
   }
 
   const storedTheme = window.localStorage.getItem(storageKey);
-  return storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : 'dark';
+  if (storedTheme === 'light' || storedTheme === 'dark') {
+    return storedTheme;
+  }
+
+  return typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: light)').matches
+    ? 'light'
+    : 'dark';
 };
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -27,7 +37,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.className = theme;
+    document.documentElement.style.colorScheme = theme;
     window.localStorage.setItem(storageKey, theme);
+
+    let runtimeThemeColor = document.head.querySelector<HTMLMetaElement>('meta[data-runtime-theme]');
+    if (!runtimeThemeColor) {
+      runtimeThemeColor = document.createElement('meta');
+      runtimeThemeColor.name = 'theme-color';
+      runtimeThemeColor.dataset.runtimeTheme = 'true';
+      document.head.appendChild(runtimeThemeColor);
+    }
+    runtimeThemeColor.content = themeColors[theme];
   }, [theme]);
 
   const value = useMemo<ThemeContextValue>(
@@ -60,7 +80,10 @@ export function ThemeToggle() {
   return (
     <button
       aria-label={`Switch to ${nextTheme} theme`}
+      aria-pressed={theme === 'light'}
       className="icon-button theme-toggle"
+      data-theme={theme}
+      title={`Use ${nextTheme} theme`}
       type="button"
       onClick={toggleTheme}
     >

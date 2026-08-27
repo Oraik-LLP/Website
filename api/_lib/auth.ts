@@ -2,9 +2,11 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { and, eq, gt, isNull } from 'drizzle-orm';
 import { createHash, randomBytes, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
-import twilio from 'twilio';
+import { verify } from '@otplib/totp';
+import { base32 } from '@otplib/plugin-base32-scure';
+import { crypto } from '@otplib/plugin-crypto-noble';
 import { getDb } from './db.js';
-import { auditEvents, engineSessions, loginChallenges, rateLimits } from './schema.js';
+import { auditEvents, engineAuthState, engineSessions, loginChallenges, rateLimits } from './schema.js';
 import { json, requestOriginAllowed } from './http.js';
 
 const scrypt = promisify(scryptCallback);
@@ -94,11 +96,8 @@ export async function startLogin(
   }
 
   const loginId = process.env.ADMIN_LOGIN_ID;
-  const phone = process.env.ADMIN_PHONE_E164;
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID;
-  if (!loginId || !phone || !accountSid || !authToken || !serviceSid) {
+  const totpSecret = process.env.ADMIN_TOTP_SECRET;
+  if (!loginId || !totpSecret) {
     throw new Error('Engine authentication is not configured');
   }
 
@@ -109,18 +108,12 @@ export async function startLogin(
     return json(response, 401, { error: 'Unable to sign in with those details' });
   }
 
-  const verification = await twilio(accountSid, authToken).verify.v2
-    .services(serviceSid)
-    .verifications.create({ to: phone, channel: 'whatsapp' });
   const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
   const db = getDb();
-  const [challenge] = await db
-    .insert(loginChallenges)
-    .values({ twilioSid: verification.sid, expiresAt })
-    .returning({ id: loginChallenges.id });
+  const [challenge] = await db.insert(loginChallenges).values({ expiresAt }).returning({ id: loginChallenges.id });
   setCookie(response, secureCookie(CHALLENGE_COOKIE, challenge.id, 600));
-  await db.insert(auditEvents).values({ action: 'auth.otp_requested' });
-  return json(response, 200, { challenge: true, destination: `••••${phone.slice(-4)}` });
+  await db.insert(auditEvents).values({ action: 'auth.totp_challenge' });
+  return json(response, 200, { challenge: true });
 }
 
 export async function verifyLogin(request: VercelRequest, response: VercelResponse, code: string) {
@@ -146,15 +139,30 @@ export async function verifyLogin(request: VercelRequest, response: VercelRespon
     .set({ attempts: challenge.attempts + 1 })
     .where(eq(loginChallenges.id, challenge.id));
 
-  const accountSid = process.env.TWILIO_ACCOUNT_SID;
-  const authToken = process.env.TWILIO_AUTH_TOKEN;
-  const serviceSid = process.env.TWILIO_VERIFY_SERVICE_SID;
-  const phone = process.env.ADMIN_PHONE_E164;
-  if (!accountSid || !authToken || !serviceSid || !phone) throw new Error('Engine authentication is not configured');
-  const check = await twilio(accountSid, authToken).verify.v2
-    .services(serviceSid)
-    .verificationChecks.create({ to: phone, code });
-  if (check.status !== 'approved') return json(response, 401, { error: 'Incorrect or expired code' });
+  const totpSecret = process.env.ADMIN_TOTP_SECRET;
+  if (!totpSecret) throw new Error('Engine authentication is not configured');
+  const [authState] = await db
+    .select()
+    .from(engineAuthState)
+    .where(eq(engineAuthState.id, 'global'))
+    .limit(1);
+  const check = await verify({
+    secret: totpSecret,
+    token: code,
+    crypto,
+    base32,
+    epochTolerance: [30, 0],
+    afterTimeStep: authState?.lastTotpTimeStep,
+  });
+  if (!check.valid) return json(response, 401, { error: 'Incorrect, expired, or already-used code' });
+
+  await db
+    .insert(engineAuthState)
+    .values({ id: 'global', lastTotpTimeStep: check.timeStep })
+    .onConflictDoUpdate({
+      target: engineAuthState.id,
+      set: { lastTotpTimeStep: check.timeStep, updatedAt: new Date() },
+    });
 
   const token = randomBytes(32).toString('base64url');
   const csrfToken = randomBytes(24).toString('base64url');

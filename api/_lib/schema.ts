@@ -136,11 +136,16 @@ export const engineSessions = pgTable(
 
 export const loginChallenges = pgTable('login_challenges', {
   id: uuid('id').primaryKey().defaultRandom(),
-  twilioSid: text('twilio_sid').notNull(),
   attempts: integer('attempts').notNull().default(0),
   expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
   completedAt: timestamp('completed_at', { withTimezone: true }),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const engineAuthState = pgTable('engine_auth_state', {
+  id: text('id').primaryKey().default('global'),
+  lastTotpTimeStep: integer('last_totp_time_step').notNull().default(-1),
+  ...timestamps,
 });
 
 export const auditEvents = pgTable(
@@ -165,4 +170,3 @@ export const rateLimits = pgTable(
     blockedUntil: timestamp('blocked_until', { withTimezone: true }),
   },
 );
-

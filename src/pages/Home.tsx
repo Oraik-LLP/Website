@@ -23,7 +23,7 @@ export function Home() {
   return (
     <>
       <Seo
-        title="Independent software systems"
+        title="Oraik Systems"
         description="Oraik Systems builds private AI, cybersecurity tools, mobile apps, document intelligence, and focused software products from Mumbai, India."
       />
       <section className="hero-section tech-grid">
@@ -83,23 +83,19 @@ export function Home() {
           <span className="eyebrow">03 // Consultancy</span>
           <h2>{String(content.consultancyHeading ?? 'Design, maintain, and optimize systems that have to keep moving.')}</h2>
         </div>
-        <div className="capability-list">
-          <span>
-            <Code2 size={18} />
-            Software architecture
-          </span>
-          <span>
-            <Shield size={18} />
-            Security review
-          </span>
-          <span>
-            <Bot size={18} />
-            AI workflow design
-          </span>
-          <span>
-            <CircuitBoard size={18} />
-            IoT integration
-          </span>
+        <div className="capability-list" aria-label="Consultancy capabilities">
+          {[
+            { label: 'Software architecture', Icon: Code2 },
+            { label: 'Security review', Icon: Shield },
+            { label: 'AI workflow design', Icon: Bot },
+            { label: 'IoT integration', Icon: CircuitBoard },
+          ].map(({ label, Icon }, index) => (
+            <div className="capability-readout" key={label}>
+              <small>{String(index + 1).padStart(2, '0')}</small>
+              <Icon size={18} aria-hidden="true" />
+              <span>{label}</span>
+            </div>
+          ))}
         </div>
       </section>
 

@@ -8,6 +8,13 @@
       "when": 1785217703233,
       "tag": "0000_rich_phil_sheldon",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1787830801912,
+      "tag": "0001_colorful_sleeper",
+      "breakpoints": true
     }
   ]
 }

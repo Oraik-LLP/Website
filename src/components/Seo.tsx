@@ -19,7 +19,7 @@ const setMeta = (name: string, content: string) => {
 
 export function Seo({ title, description }: SeoProps) {
   useEffect(() => {
-    document.title = `${title} | Oraik Systems`;
+    document.title = title === 'Oraik Systems' ? title : `${title} | Oraik Systems`;
     setMeta('description', description);
   }, [description, title]);
 

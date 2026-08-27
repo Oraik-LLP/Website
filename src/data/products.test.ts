@@ -25,7 +25,8 @@ describe('products data', () => {
     expect(getProductBySlug('local-lm')?.name).toBe('Phos');
     expect(getProductBySlug('local-lm')?.productSite).toBe('https://phos.oraik.co');
     expect(getProductBySlug('local-lm')?.catalogImage).toBe('/assets/products/local-lm-catalog.png');
-    expect(getProductBySlug('get-true-charge')?.productSite).toBe('https://gettruecharge.com');
+    expect(getProductBySlug('get-true-charge')?.productSite).toBe('https://gettruecharge.com/hospital-bill/');
+    expect(getProductBySlug('get-true-charge')?.redirectToProductSite).toBe(true);
     expect(getProductBySlug('mark-it')?.ownership).toBe('solo');
     expect(getProductBySlug('xpdf')).toBeUndefined();
     expect(getProductBySlug('orkzoid')).toBeUndefined();

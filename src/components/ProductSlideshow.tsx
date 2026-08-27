@@ -9,7 +9,7 @@ export function ProductSlideshow() {
   const [activeIndex, setActiveIndex] = useState(0);
   const product = featuredProducts[activeIndex] ?? featuredProducts[0];
   if (!product) return null;
-  const catalogImage = product.catalogImage ?? product.logo;
+  const headerClassImage = product.headerClassImage ?? product.catalogImage ?? product.logo;
 
   const move = (direction: number) => {
     setActiveIndex((currentIndex) => {
@@ -49,7 +49,7 @@ export function ProductSlideshow() {
         </div>
         {product.redirectToProductSite && product.productSite ? (
           <a className="slide-visual" href={product.productSite} target={product.openInNewTab === false ? undefined : '_blank'} rel={product.openInNewTab === false ? undefined : 'noreferrer'}>
-            <img src={catalogImage} alt={`${product.name} preview`} />
+            <img className="header-class-icon" data-asset-role="header_class" src={headerClassImage} alt={`${product.name} header artwork`} />
             <div className="slide-metrics">
               {product.metrics.map((metric) => (
                 <span key={metric.label}>
@@ -61,7 +61,7 @@ export function ProductSlideshow() {
           </a>
         ) : (
           <Link className="slide-visual" to={`/products/${product.slug}`}>
-          <img src={catalogImage} alt={`${product.name} preview`} />
+          <img className="header-class-icon" data-asset-role="header_class" src={headerClassImage} alt={`${product.name} header artwork`} />
           <div className="slide-metrics">
             {product.metrics.map((metric) => (
               <span key={metric.label}>

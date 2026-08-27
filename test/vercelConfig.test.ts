@@ -7,7 +7,15 @@ describe('Vercel config', () => {
     const config = JSON.parse(readFileSync(resolve(process.cwd(), 'vercel.json'), 'utf8'));
 
     expect(config.rewrites).toContainEqual({
-      source: '/(.*)',
+      source: '/api/engine/:path*',
+      destination: '/api/engine',
+    });
+    expect(config.rewrites).toContainEqual({
+      source: '/api/public/:path*',
+      destination: '/api/public',
+    });
+    expect(config.rewrites).toContainEqual({
+      source: '/:path((?!api/).*)',
       destination: '/index.html',
     });
   });

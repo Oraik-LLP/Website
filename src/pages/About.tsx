@@ -67,10 +67,15 @@ export function About() {
         {runtimeCards.map((card, index) => {
           const Icon = [Cpu, Shield, Bot, Wrench][index % 4];
           return (
-            <article key={card.title} className="about-card slash-hover">
-              <Icon size={24} />
-              <h2>{card.title}</h2>
-              <p>{card.copy}</p>
+            <article key={card.title} className="about-discipline">
+              <div className="discipline-marker">
+                <small>{String(index + 1).padStart(2, '0')}</small>
+                <Icon size={21} aria-hidden="true" />
+              </div>
+              <div>
+                <h2>{card.title}</h2>
+                <p>{card.copy}</p>
+              </div>
             </article>
           );
         })}
@@ -81,12 +86,15 @@ export function About() {
           <h2>Leadership & Philosophy</h2>
         </div>
         <div className="leadership-grid">
-          {runtimeLeaders.map((leader) => (
-            <article key={leader.name} className="leadership-card slash-hover">
-              <span>Designated Partner</span>
-              <h3>{leader.name}</h3>
-              <strong>{leader.title}</strong>
-              <p>{leader.copy}</p>
+          {runtimeLeaders.map((leader, index) => (
+            <article key={leader.name} className="leadership-profile">
+              <div className="profile-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
+              <div className="profile-copy">
+                <span>Designated Partner</span>
+                <h3>{leader.name}</h3>
+                <strong>{leader.title}</strong>
+                <p>{leader.copy}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -95,10 +103,13 @@ export function About() {
           <h2>Our Approach</h2>
         </div>
         <div className="approach-grid">
-          {runtimeApproach.map((point) => (
-            <article key={point.title} className="approach-card slash-hover">
-              <span>{point.title}</span>
-              <p>{point.copy}</p>
+          {runtimeApproach.map((point, index) => (
+            <article key={point.title} className="approach-principle">
+              <small>{String(index + 1).padStart(2, '0')}</small>
+              <div>
+                <h3>{point.title}</h3>
+                <p>{point.copy}</p>
+              </div>
             </article>
           ))}
         </div>

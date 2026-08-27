@@ -55,6 +55,7 @@ export const productInputSchema = z
     longDescription: z.string().max(5000),
     logo: safeUrlSchema,
     catalogImage: safeUrlSchema.optional().or(z.literal('')),
+    headerClassImage: safeUrlSchema.optional().or(z.literal('')),
     heroImage: safeUrlSchema.optional().or(z.literal('')),
     tags: z.array(z.string().max(50)).max(30),
     features: z.array(z.string().max(500)).max(50),
@@ -112,4 +113,3 @@ export const accountSchema = z.object({
   active: z.boolean(),
   sortOrder: z.number().int().min(0).max(10000),
 });
-

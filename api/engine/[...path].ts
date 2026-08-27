@@ -3,9 +3,10 @@ import { del, put } from '@vercel/blob';
 import { and, asc, desc, eq, inArray } from 'drizzle-orm';
 import { z } from 'zod';
 import { randomUUID } from 'node:crypto';
-import { imageSize } from 'image-size';
 import { logout, requireEngine, startLogin, verifyLogin } from '../_lib/auth.js';
 import { getDb } from '../_lib/db.js';
+import { inspectRaster } from '../_lib/image.js';
+import { catchAllPath } from '../_lib/path.js';
 import { handleError, json, methodNotAllowed, readJson } from '../_lib/http.js';
 import {
   accountSchema,
@@ -29,11 +30,10 @@ import {
 export const config = { api: { bodyParser: false } };
 
 const credentialsSchema = z.object({ loginId: z.string().max(200), password: z.string().max(500) });
-const otpSchema = z.object({ code: z.string().regex(/^\d{4,10}$/) });
+const otpSchema = z.object({ code: z.string().regex(/^\d{6}$/) });
 
 function pathParts(request: VercelRequest) {
-  const raw = request.query.path;
-  return Array.isArray(raw) ? raw : raw ? [raw] : [];
+  return catchAllPath(request.url, request.query, 'engine');
 }
 
 async function bodyBuffer(request: VercelRequest): Promise<Uint8Array> {
@@ -53,26 +53,6 @@ async function bodyBuffer(request: VercelRequest): Promise<Uint8Array> {
     offset += chunk.length;
   }
   return combined;
-}
-
-function rasterType(buffer: Uint8Array, declared: string) {
-  if (
-    declared === 'image/png' &&
-    [137, 80, 78, 71, 13, 10, 26, 10].every((byte, index) => buffer[index] === byte)
-  ) {
-    return { mime: declared, extension: 'png' };
-  }
-  if (declared === 'image/jpeg' && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[buffer.length - 2] === 0xff) {
-    return { mime: declared, extension: 'jpg' };
-  }
-  if (
-    declared === 'image/webp' &&
-    String.fromCharCode(...buffer.subarray(0, 4)) === 'RIFF' &&
-    String.fromCharCode(...buffer.subarray(8, 12)) === 'WEBP'
-  ) {
-    return { mime: declared, extension: 'webp' };
-  }
-  return null;
 }
 
 async function audit(action: string, entityType?: string, entityId?: string, metadata = {}) {
@@ -410,21 +390,22 @@ async function handleMedia(request: VercelRequest, response: VercelResponse, par
     const mimeType = String(request.headers['content-type'] ?? '');
     if (!altText || altText.length > 300) return json(response, 400, { error: 'Valid alt text is required' });
     const buffer = await bodyBuffer(request);
-    const type = rasterType(buffer, mimeType);
+    const type = inspectRaster(buffer, mimeType);
     if (!type) return json(response, 400, { error: 'Only verified PNG, JPEG, and WebP files are accepted' });
-    const dimensions = imageSize(buffer);
     if (
-      !dimensions.width ||
-      !dimensions.height ||
-      dimensions.width < 32 ||
-      dimensions.height < 32 ||
-      dimensions.width > 8000 ||
-      dimensions.height > 8000
+      type.width < 32 ||
+      type.height < 32 ||
+      type.width > 8000 ||
+      type.height > 8000
     ) {
       return json(response, 400, { error: 'Image dimensions must be between 32 and 8000 pixels' });
     }
     const pathname = `engine/${randomUUID()}.${type.extension}`;
-    const blob = await put(pathname, buffer, { access: 'public', contentType: type.mime, addRandomSuffix: false });
+    const blob = await put(pathname, Buffer.from(buffer), {
+      access: 'public',
+      contentType: type.mime,
+      addRandomSuffix: false,
+    });
     const [item] = await db
       .insert(mediaAssets)
       .values({
@@ -433,8 +414,8 @@ async function handleMedia(request: VercelRequest, response: VercelResponse, par
         filename: originalName.slice(0, 255),
         mimeType: type.mime,
         size: buffer.length,
-        width: dimensions.width,
-        height: dimensions.height,
+        width: type.width,
+        height: type.height,
         altText,
       })
       .returning();

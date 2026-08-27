@@ -21,7 +21,15 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/engine/:path*",
+      "destination": "/api/engine"
+    },
+    {
+      "source": "/api/public/:path*",
+      "destination": "/api/public"
+    },
+    {
+      "source": "/:path((?!api/).*)",
       "destination": "/index.html"
     }
   ]

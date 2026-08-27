@@ -16,6 +16,7 @@ export type Product = {
   longDescription: string;
   logo: string;
   catalogImage?: string;
+  headerClassImage?: string;
   heroImage?: string;
   tags: string[];
   features: string[];
@@ -148,8 +149,9 @@ export const products: Product[] = [
       { label: 'Login', value: 'Not first' },
       { label: 'Input', value: 'Multi-file' },
     ],
-    productSite: 'https://gettruecharge.com',
+    productSite: 'https://gettruecharge.com/hospital-bill/',
     productSiteLabel: 'Run a bill audit',
+    redirectToProductSite: true,
     links: {
       github: { label: 'GitHub', href: comingSoon, status: 'coming-soon' },
       playStore: { label: 'Google Play', href: comingSoon, status: 'coming-soon' },

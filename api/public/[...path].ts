@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { asc, eq } from 'drizzle-orm';
 import { getDb } from '../_lib/db.js';
 import { handleError } from '../_lib/http.js';
+import { catchAllPath } from '../_lib/path.js';
 import { connectedAccounts, pageSections, posts, products, redirectHistory, siteSettings } from '../_lib/schema.js';
 
 function publicHeaders(response: VercelResponse) {
@@ -47,8 +48,7 @@ export default async function handler(request: VercelRequest, response: VercelRe
   try {
     if (request.method !== 'GET') return response.status(405).json({ error: 'Method not allowed' });
     publicHeaders(response);
-    const raw = request.query.path;
-    const parts = Array.isArray(raw) ? raw : raw ? [raw] : [];
+    const parts = catchAllPath(request.url, request.query, 'public');
     const db = getDb();
 
     if (parts[0] === 'bootstrap') {

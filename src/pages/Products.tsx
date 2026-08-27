@@ -6,6 +6,7 @@ export function Products() {
   const { products } = useContent();
   const oraikProducts = products.filter((product) => product.ownership !== 'solo');
   const soloProducts = products.filter((product) => product.ownership === 'solo');
+  const oraikCategories = new Set(oraikProducts.map((product) => product.category)).size;
 
   return (
     <section className="page-section tech-grid">
@@ -27,27 +28,40 @@ export function Products() {
           Systems tracked
         </span>
         <span>
-          <strong>{products.filter((product) => product.featured).length}</strong>
+          <strong>{oraikProducts.filter((product) => product.featured).length}</strong>
           Active highlights
         </span>
         <span>
-          <strong>{new Set(products.map((product) => product.category)).size}</strong>
+          <strong>{oraikCategories}</strong>
           Product lanes
         </span>
       </div>
-      <div className="product-mini-grid" aria-label="Product catalog">
-        {oraikProducts.map((product, index) => (
-          <ProductCard key={product.slug} product={product} index={index} />
-        ))}
-      </div>
+
+      <section className="catalog-section" aria-labelledby="oraik-products-title">
+        <div className="catalog-section-heading">
+          <div>
+            <span>01 // Oraik systems</span>
+            <h2 id="oraik-products-title">Company products</h2>
+          </div>
+          <p>Every active Oraik product, including released systems, public builds, and products in development.</p>
+        </div>
+        <div className="product-mini-grid" aria-label="Oraik product catalog">
+          {oraikProducts.map((product, index) => (
+            <ProductCard key={product.slug} product={product} index={index} />
+          ))}
+        </div>
+      </section>
+
       {soloProducts.length > 0 && (
         <section className="solo-projects" aria-labelledby="solo-projects-title">
-          <div className="section-heading compact-heading">
-            <span>Independent // Solo work</span>
-            <h2 id="solo-projects-title">Built independently by a team member.</h2>
-            <p>Separate from Oraik’s company product line, shown here as individual maker work.</p>
+          <div className="catalog-section-heading">
+            <div>
+              <span>02 // Independent</span>
+              <h2 id="solo-projects-title">Solo project</h2>
+            </div>
+            <p>Mark-it is built independently by a team member and is presented separately from Oraik’s company product line.</p>
           </div>
-          <div className="product-mini-grid solo-product-grid">
+          <div className="product-mini-grid solo-product-grid" aria-label="Independent product catalog">
             {soloProducts.map((product, index) => (
               <ProductCard key={product.slug} product={product} index={index} />
             ))}

@@ -133,7 +133,6 @@ function EngineLogin() {
   const [loginId, setLoginId] = useState('');
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
-  const [destination, setDestination] = useState('');
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -144,12 +143,11 @@ function EngineLogin() {
     setBusy(true);
     setMessage('');
     try {
-      const result = await engineApi<{ challenge: true; destination: string }>('auth/start', {
+      await engineApi<{ challenge: true }>('auth/start', {
         method: 'POST',
         body: JSON.stringify({ loginId, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-      setDestination(result.destination);
       setStep('otp');
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Unable to sign in');
@@ -190,7 +188,7 @@ function EngineLogin() {
         <p>
           {step === 'credentials'
             ? 'This surface has no registration or public account access.'
-            : `A WhatsApp code was sent to ${destination}.`}
+            : 'Enter the rotating code from your authenticator app.'}
         </p>
         <form onSubmit={step === 'credentials' ? submitCredentials : submitOtp}>
           {step === 'credentials' ? (
@@ -209,7 +207,7 @@ function EngineLogin() {
               </EngineField>
             </>
           ) : (
-            <EngineField label="WhatsApp code">
+            <EngineField label="Authenticator code">
               <input
                 className="engine-otp"
                 inputMode="numeric"
@@ -625,6 +623,7 @@ const emptyProduct: ProductEditorState = {
   longDescription: '',
   logo: '/assets/oraik/oraik-mini-light.png',
   catalogImage: '',
+  headerClassImage: '',
   heroImage: '',
   tags: [],
   features: [],
@@ -756,6 +755,7 @@ function EngineProductEditor() {
           <EnginePanel title="Visual system" label="MEDIA">
             <EngineField label="Logo URL"><input value={product.logo} onChange={(e) => setProduct({ ...product, logo: e.target.value })} /></EngineField>
             <EngineField label="Catalog image"><input value={product.catalogImage ?? ''} onChange={(e) => setProduct({ ...product, catalogImage: e.target.value })} /></EngineField>
+            <EngineField label="Header class artwork"><input value={product.headerClassImage ?? ''} onChange={(e) => setProduct({ ...product, headerClassImage: e.target.value })} placeholder="/assets/products/app-header-class.png" /></EngineField>
             <EngineField label="Hero image"><input value={product.heroImage ?? ''} onChange={(e) => setProduct({ ...product, heroImage: e.target.value })} /></EngineField>
             {product.logo && <img className="engine-product-logo" src={product.logo} alt="" />}
             <Link className="engine-preview-link" to="/engine/media"><FileImage />Open media library</Link>

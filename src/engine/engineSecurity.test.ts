@@ -42,6 +42,7 @@ describe('Oraik Engine validation', () => {
     const base = {
       ...fixture,
       catalogImage: fixture.catalogImage ?? '',
+      headerClassImage: fixture.headerClassImage ?? '',
       heroImage: fixture.heroImage ?? '',
       audiences: fixture.audiences ?? [],
       workflow: fixture.workflow ?? [],
@@ -81,4 +82,3 @@ describe('Oraik Engine validation', () => {
     ).toBe(false);
   });
 });
-

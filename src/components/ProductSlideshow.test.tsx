@@ -11,6 +11,9 @@ describe('ProductSlideshow', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByAltText('FixEase preview')).toHaveAttribute('src', '/assets/fixease/car-default-hero.png');
+    const artwork = screen.getByAltText('FixEase header artwork');
+    expect(artwork).toHaveAttribute('src', '/assets/fixease/car-default-hero.png');
+    expect(artwork).toHaveAttribute('data-asset-role', 'header_class');
+    expect(artwork).toHaveClass('header-class-icon');
   });
 });
